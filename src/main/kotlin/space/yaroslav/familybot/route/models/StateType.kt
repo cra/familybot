@@ -13,7 +13,7 @@ enum class StateType(val id: Int, val clazz: KClass<out State>) {
     RAGE_MODE(3, RageModeState::class);
 
     companion object {
-        private val lookup = StateType.values().associateBy(StateType::id)
+        private val lookup = values().associateBy(StateType::id)
         fun findById(id: Int): StateType? {
             return lookup[id]
         }

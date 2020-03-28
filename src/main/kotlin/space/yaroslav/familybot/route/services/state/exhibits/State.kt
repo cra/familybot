@@ -4,6 +4,8 @@ import space.yaroslav.familybot.route.models.StateType
 
 interface State : AutoCloseable {
 
+    val id: Long?
+
     fun checkIsItOverAlready(): Boolean
 
     fun type(): StateType

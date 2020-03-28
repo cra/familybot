@@ -4,7 +4,7 @@ import space.yaroslav.familybot.route.models.FunctionId
 import space.yaroslav.familybot.route.models.StateType
 import java.time.Duration
 
-class FuckOffState(duration: Duration) : TimeLimitedState(duration),
+class FuckOffState(duration: Duration, override val id: Long? = null) : TimeLimitedState(duration),
     FunctionalToleranceState {
 
     override fun type() = StateType.FUCK_OFF

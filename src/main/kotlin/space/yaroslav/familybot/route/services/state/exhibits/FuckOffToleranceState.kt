@@ -3,7 +3,7 @@ package space.yaroslav.familybot.route.services.state.exhibits
 import space.yaroslav.familybot.route.models.StateType
 import java.time.Duration
 
-class FuckOffToleranceState(duration: Duration) : TimeLimitedState(duration) {
+class FuckOffToleranceState(duration: Duration, override val id: Long? = null) : TimeLimitedState(duration) {
     override fun additionalIsOverChecks(): List<() -> Boolean> {
         return emptyList()
     }
