@@ -10,8 +10,8 @@ import space.yaroslav.familybot.common.User
 import space.yaroslav.familybot.common.utils.chatId
 import space.yaroslav.familybot.common.utils.toChat
 import space.yaroslav.familybot.common.utils.toUser
-import space.yaroslav.familybot.route.services.state.FuckOffState
-import space.yaroslav.familybot.route.services.state.FuckOffToleranceState
+import space.yaroslav.familybot.route.services.state.exhibits.FuckOffState
+import space.yaroslav.familybot.route.services.state.exhibits.FuckOffToleranceState
 import space.yaroslav.familybot.route.services.state.StateService
 import space.yaroslav.familybot.telegram.BotConfig
 
@@ -40,8 +40,16 @@ class FuckOffKeyWordProcessor(
 
     override fun process(update: Update): suspend (AbsSender) -> Unit {
         val chatId = update.chatId()
-        stateService.setStateForChat(chatId, FuckOffState(defaultFuckOffDuration))
-        stateService.setStateForUserAndChat(update.toUser().id, chatId, FuckOffToleranceState(defaultToleranceDuration))
+        stateService.setStateForChat(chatId,
+            FuckOffState(
+                defaultFuckOffDuration
+            )
+        )
+        stateService.setStateForUserAndChat(update.toUser().id, chatId,
+            FuckOffToleranceState(
+                defaultToleranceDuration
+            )
+        )
         return {}
     }
 

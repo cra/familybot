@@ -1,9 +1,13 @@
-package space.yaroslav.familybot.route.services.state
+package space.yaroslav.familybot.route.services.state.exhibits
 
-import java.time.Duration
 import space.yaroslav.familybot.route.models.FunctionId
+import space.yaroslav.familybot.route.models.StateType
+import java.time.Duration
 
-class FuckOffState(duration: Duration) : TimeLimitedState(duration), FunctionalToleranceState {
+class FuckOffState(duration: Duration) : TimeLimitedState(duration),
+    FunctionalToleranceState {
+
+    override fun type() = StateType.FUCK_OFF
 
     override fun additionalIsOverChecks(): List<() -> Boolean> {
         return emptyList()

@@ -1,8 +1,10 @@
 package space.yaroslav.familybot.route.services.state
 
+import org.springframework.stereotype.Component
+import space.yaroslav.familybot.route.services.state.exhibits.FunctionalToleranceState
+import space.yaroslav.familybot.route.services.state.exhibits.State
 import kotlin.reflect.KClass
 import kotlin.reflect.full.safeCast
-import org.springframework.stereotype.Component
 
 @Component
 class StateServiceImpl : StateService {
@@ -84,4 +86,3 @@ class StateServiceImpl : StateService {
     private fun isOver(state: State) = state.checkIsItOverAlready()
 }
 
-data class StateKey(val chatId: Long? = null, val userId: Long? = null)

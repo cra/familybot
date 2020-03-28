@@ -15,7 +15,7 @@ import space.yaroslav.familybot.route.executors.Configurable
 import space.yaroslav.familybot.route.executors.Executor
 import space.yaroslav.familybot.route.models.FunctionId
 import space.yaroslav.familybot.route.models.Priority
-import space.yaroslav.familybot.route.services.state.RageModeState
+import space.yaroslav.familybot.route.services.state.exhibits.RageModeState
 import space.yaroslav.familybot.route.services.state.StateService
 
 @Component

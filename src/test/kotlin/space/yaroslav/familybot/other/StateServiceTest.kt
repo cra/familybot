@@ -5,8 +5,8 @@ import org.junit.Assert
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import space.yaroslav.familybot.infrastructure.randomLong
-import space.yaroslav.familybot.route.services.state.FuckOffState
-import space.yaroslav.familybot.route.services.state.RageModeState
+import space.yaroslav.familybot.route.services.state.exhibits.FuckOffState
+import space.yaroslav.familybot.route.services.state.exhibits.RageModeState
 import space.yaroslav.familybot.route.services.state.StateService
 import space.yaroslav.familybot.suits.FamilybotApplicationTest
 
@@ -17,7 +17,10 @@ class StateServiceTest : FamilybotApplicationTest() {
 
     @Test
     fun `put and get config back`() {
-        val state = RageModeState(10, Duration.ofSeconds(10))
+        val state = RageModeState(
+            10,
+            Duration.ofSeconds(10)
+        )
         val chatId = randomLong()
         stateService.setStateForChat(chatId, state)
         val stateFromService = stateService.getStateForChat(chatId, RageModeState::class)
@@ -26,7 +29,10 @@ class StateServiceTest : FamilybotApplicationTest() {
 
     @Test
     fun `put and get different config type`() {
-        val state = RageModeState(10, Duration.ofSeconds(10))
+        val state = RageModeState(
+            10,
+            Duration.ofSeconds(10)
+        )
         val chatId = randomLong()
         stateService.setStateForChat(chatId, state)
         val stateFromService = stateService.getStateForChat(chatId, FuckOffState::class)
@@ -35,7 +41,10 @@ class StateServiceTest : FamilybotApplicationTest() {
 
     @Test
     fun `should spoil config after required time`() {
-        val state = RageModeState(10, Duration.ofSeconds(1))
+        val state = RageModeState(
+            10,
+            Duration.ofSeconds(1)
+        )
         val chatId = randomLong()
         stateService.setStateForChat(chatId, state)
         Thread.sleep(1000)
@@ -45,7 +54,10 @@ class StateServiceTest : FamilybotApplicationTest() {
 
     @Test
     fun `should remove config if it says it is over`() {
-        val state = RageModeState(1, Duration.ofSeconds(10))
+        val state = RageModeState(
+            1,
+            Duration.ofSeconds(10)
+        )
         val chatId = randomLong()
         stateService.setStateForChat(chatId, state)
         val stateFromService = stateService.getStateForChat(chatId, RageModeState::class)

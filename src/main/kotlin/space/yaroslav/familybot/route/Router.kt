@@ -1,6 +1,5 @@
 package space.yaroslav.familybot.route
 
-import java.time.Instant
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
@@ -29,9 +28,10 @@ import space.yaroslav.familybot.route.models.Priority
 import space.yaroslav.familybot.route.models.higherThan
 import space.yaroslav.familybot.route.services.RawUpdateLogger
 import space.yaroslav.familybot.route.services.dictionary.Dictionary
-import space.yaroslav.familybot.route.services.state.FunctionalToleranceState
 import space.yaroslav.familybot.route.services.state.StateService
+import space.yaroslav.familybot.route.services.state.exhibits.FunctionalToleranceState
 import space.yaroslav.familybot.telegram.BotConfig
+import java.time.Instant
 
 @Component
 class Router(

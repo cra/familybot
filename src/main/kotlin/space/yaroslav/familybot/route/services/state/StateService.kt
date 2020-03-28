@@ -1,5 +1,7 @@
 package space.yaroslav.familybot.route.services.state
 
+import space.yaroslav.familybot.route.services.state.exhibits.FunctionalToleranceState
+import space.yaroslav.familybot.route.services.state.exhibits.State
 import kotlin.reflect.KClass
 
 interface StateService {
@@ -15,3 +17,6 @@ interface StateService {
 
     fun getFunctionToleranceStatesForChat(chatId: Long): Set<FunctionalToleranceState>
 }
+
+data class StateKey(val chatId: Long? = null, val userId: Long? = null)
+

@@ -19,7 +19,7 @@ import space.yaroslav.familybot.route.models.Command
 import space.yaroslav.familybot.route.models.FunctionId
 import space.yaroslav.familybot.route.models.Phrase
 import space.yaroslav.familybot.route.services.dictionary.Dictionary
-import space.yaroslav.familybot.route.services.state.RageModeState
+import space.yaroslav.familybot.route.services.state.exhibits.RageModeState
 import space.yaroslav.familybot.route.services.state.StateService
 import space.yaroslav.familybot.telegram.BotConfig
 
@@ -45,7 +45,12 @@ class RageExecutor(
         val chat = update.toChat()
         if (isRageForced(update)) {
             logger.warn("Someone forced ${command()}")
-            stateService.setStateForChat(chat.id, RageModeState(20, Duration.ofMinutes(10)))
+            stateService.setStateForChat(chat.id,
+                RageModeState(
+                    20,
+                    Duration.ofMinutes(10)
+                )
+            )
             return {
                 it.send(update, dictionary.get(Phrase.RAGE_INITIAL))
             }
@@ -62,7 +67,12 @@ class RageExecutor(
                 it.send(update, dictionary.get(Phrase.RAGE_DONT_CARE_ABOUT_YOU))
             }
         }
-        stateService.setStateForChat(chat.id, RageModeState(20, Duration.ofMinutes(10)))
+        stateService.setStateForChat(chat.id,
+            RageModeState(
+                20,
+                Duration.ofMinutes(10)
+            )
+        )
         return {
             it.send(update, dictionary.get(Phrase.RAGE_INITIAL))
         }

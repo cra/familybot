@@ -1520,3 +1520,31 @@ create table if not exists message_content_type
 );
 
 CREATE INDEX idx_raw_chat_log_chat_id ON raw_chat_log (chat_id);
+
+create table if not exists state_type
+(
+    state_type_id          int           not null primary key,
+    state_type_name        varchar(200)  not null
+);
+
+create table if not exists entity
+(
+    entity_id serial primary key,
+    entity_user_value bigint references users(id),
+    entity_chat_value bigint references chats(id)
+);
+
+create table if not exists state
+(
+    state_id SERIAL PRIMARY KEY,
+    state_from_date timestamp default current_timestamp not null,
+    state_till_date timestamp not null,
+    state_entity_id bigint references entity(entity_id) not null,
+    state_type_id int references state_type(state_type_id) not null,
+    state_data JSON not null
+);
+
+insert into state_type(state_type_id, state_type_name) values
+(1, 'FUCK_OFF'),
+(2, 'FUCK_OFF_TOLERANCE'),
+(3, 'RAGE_MODE');

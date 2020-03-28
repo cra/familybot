@@ -1,11 +1,12 @@
-package space.yaroslav.familybot.route.services.state
+package space.yaroslav.familybot.route.services.state.exhibits
 
 import java.time.Duration
 import java.time.Instant
 
-abstract class TimeLimitedState(duration: Duration) : State {
+abstract class TimeLimitedState(duration: Duration) :
+    State {
 
-    private val endTime = Instant.now().plusSeconds(duration.seconds)
+    val endTime = Instant.now().plusSeconds(duration.seconds)
 
     override fun checkIsItOverAlready(): Boolean {
         return if (Instant.now().isAfter(endTime)) {

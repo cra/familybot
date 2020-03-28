@@ -1,4 +1,4 @@
-package space.yaroslav.familybot.route.services.state
+package space.yaroslav.familybot.route.services.state.exhibits
 
 import space.yaroslav.familybot.route.models.FunctionId
 
