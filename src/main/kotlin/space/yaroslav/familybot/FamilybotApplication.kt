@@ -33,6 +33,6 @@ class FamilybotApplication {
 fun main() {
     ApiContextInitializer.init()
     val app = SpringApplication(FamilybotApplication::class.java)
-    app.webApplicationType = WebApplicationType.NONE
+    app.webApplicationType = WebApplicationType.SERVLET
     app.run()
 }

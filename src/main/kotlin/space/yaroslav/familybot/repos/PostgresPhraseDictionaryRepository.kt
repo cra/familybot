@@ -43,6 +43,30 @@ class PostgresPhraseDictionaryRepository(val jdbcTemplate: JdbcTemplate) : Phras
         return themeCache.get().first(PhraseThemeDescription::isDefault).theme
     }
 
+    override fun getAllPhrases(phrase: Phrase): List<String> {
+        return cacheAllPhrases.get(phrase)
+    }
+
+    override fun getAll(): List<RawPhrase> {
+        return jdbcTemplate.query(
+            "select * from phrase_dictionary"
+        ) { rs, _ ->
+            RawPhrase(
+                rs.getInt("phrase_dictionary_id"),
+                Phrase.lookup(rs.getInt("phrase_type_id")),
+                PhraseTheme.lookup(rs.getInt("phrase_theme_id")),
+                rs.getString("phrase")
+            )
+        }
+    }
+
+    override fun addPhrase(phrase: Phrase, phraseTheme: PhraseTheme, value: String) {
+        jdbcTemplate.update(
+            "insert into phrase_dictionary (phrase_type_id, phrase_theme_id, phrase) values (?, ?, ?)",
+            phrase.id, phraseTheme.id, value
+        )
+    }
+
     private fun getPhrasesInternal(type: Pair<Phrase, PhraseTheme>?): List<String> {
         if (type == null) {
             throw FamilyBot.InternalException("type of phrase should not be null, seems like internal logic error")
@@ -60,7 +84,7 @@ class PostgresPhraseDictionaryRepository(val jdbcTemplate: JdbcTemplate) : Phras
             "select * from phrase_theme;"
         ) { rs, _ ->
             PhraseThemeDescription(
-                PhraseTheme.values().first { it.id == rs.getInt("phrase_theme_id") },
+                PhraseTheme.lookup(rs.getInt("phrase_theme_id")),
                 rs.getBoolean("active_by_default")
             )
         }
@@ -71,15 +95,11 @@ class PostgresPhraseDictionaryRepository(val jdbcTemplate: JdbcTemplate) : Phras
             "select * from phrase_theme_settings;"
         ) { rs, _ ->
             PhraseThemeSetting(
-                PhraseTheme.values().first { it.id == rs.getInt("phrase_theme_id") },
+                PhraseTheme.lookup(rs.getInt("phrase_theme_id")),
                 rs.getTimestamp("since").toInstant(),
                 rs.getTimestamp("till").toInstant()
             )
         }
-    }
-
-    override fun getAllPhrases(phrase: Phrase): List<String> {
-        return cacheAllPhrases.get(phrase)
     }
 
     private fun getAllPhrasesInternal(type: Phrase?): List<String> {
@@ -103,4 +123,11 @@ class PhraseThemeSetting(
     val theme: PhraseTheme,
     val since: Instant,
     val till: Instant
+)
+
+class RawPhrase(
+    val valueId: Int,
+    val type: Phrase,
+    val theme: PhraseTheme,
+    val value: String
 )

@@ -1,5 +1,7 @@
 package space.yaroslav.familybot.models
 
+import space.yaroslav.familybot.telegram.FamilyBot
+
 enum class Phrase(val id: Int) {
     BAD_COMMAND_USAGE(1),
     ASK_WORLD_LIMIT_BY_CHAT(2),
@@ -72,10 +74,30 @@ enum class Phrase(val id: Int) {
     ASK_WORLD_REPLY_FROM_CHAT(69),
     TECHNICAL_ISSUE(70),
     BET_WINNABLE_NUMBERS_ANNOUNCEMENT(71);
+
+    companion object {
+        private val lookupMap = values().map { it.id to it }.toMap()
+        fun lookup(id: Int): Phrase {
+            return lookupMap[id] ?: throw FamilyBot.InternalException("Wrong id $id was provided")
+        }
+        fun lookup(name: String): Phrase {
+            return values().find { it.name == name } ?: throw FamilyBot.InternalException("Wrong name $name was provided")
+        }
+    }
 }
 
 enum class PhraseTheme(val id: Int) {
     DEFAULT(1),
     DAY_OF_DEFENDER_23_FEB(2),
-    DAY_OF_WOMAN_8_MARCH(3)
+    DAY_OF_WOMAN_8_MARCH(3);
+
+    companion object {
+        private val lookupMap = values().map { it.id to it }.toMap()
+        fun lookup(id: Int): PhraseTheme {
+            return lookupMap[id] ?: throw FamilyBot.InternalException("Wrong id $id was provided")
+        }
+        fun lookup(name: String): PhraseTheme {
+            return values().find { it.name == name } ?: throw FamilyBot.InternalException("Wrong name $name was provided")
+        }
+    }
 }
