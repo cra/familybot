@@ -8,7 +8,8 @@ spring:
     driver-class-name: "org.postgresql.Driver"
     password: {password}
     username: {user}
-
+web:
+  token: {token}
 ---
 settings:
   botname: {name}
@@ -21,6 +22,8 @@ spring:
     password: {password}
     username: {user}
   profiles: production
+web:
+  token: {token}
 
 
 
