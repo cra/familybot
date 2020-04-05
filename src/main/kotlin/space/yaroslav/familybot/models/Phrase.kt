@@ -81,7 +81,7 @@ enum class Phrase(val id: Int) {
             return lookupMap[id] ?: throw FamilyBot.InternalException("Wrong id $id was provided")
         }
         fun lookup(name: String): Phrase {
-            return values().find { it.name == name } ?: throw FamilyBot.InternalException("Wrong name $name was provided")
+            return values().find { it.name.equals(name, ignoreCase = true) } ?: throw FamilyBot.InternalException("Wrong name $name was provided")
         }
     }
 }
@@ -97,7 +97,7 @@ enum class PhraseTheme(val id: Int) {
             return lookupMap[id] ?: throw FamilyBot.InternalException("Wrong id $id was provided")
         }
         fun lookup(name: String): PhraseTheme {
-            return values().find { it.name == name } ?: throw FamilyBot.InternalException("Wrong name $name was provided")
+            return values().find { it.name.equals(name, ignoreCase = true) } ?: throw FamilyBot.InternalException("Wrong name $name was provided")
         }
     }
 }

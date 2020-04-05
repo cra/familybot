@@ -13,25 +13,11 @@ class DictionaryManagerImpl(
 
     override fun getAll(): Map<PhraseTheme, Map<Phrase, List<PhraseValueWithId>>> {
         return dictionaryRepository.getAll()
-            .fold(mutableMapOf()) { accumulator: MutableMap<PhraseTheme, MutableMap<Phrase, List<PhraseValueWithId>>>, rawPhrase: RawPhrase ->
-                accumulator.apply {
-                    compute(rawPhrase.theme) { _, phrasesToValues ->
-                        phrasesToValues?.apply {
-                            compute(rawPhrase.type) { _, values ->
-                                values?.plus(PhraseValueWithId(rawPhrase.valueId, rawPhrase.value)) ?: listOf(
-                                    PhraseValueWithId(rawPhrase.valueId, rawPhrase.value)
-                                )
-                            }
-                        } ?: mutableMapOf(
-                            rawPhrase.type to listOf(
-                                PhraseValueWithId(
-                                    rawPhrase.valueId,
-                                    rawPhrase.value
-                                )
-                            )
-                        )
-                    }
-                }
+            .groupBy(RawPhrase::theme)
+            .mapValues { (_, value) ->
+                value.groupBy(
+                    keySelector = RawPhrase::type,
+                    valueTransform = { PhraseValueWithId(it.valueId, it.value) })
             }
     }
 
